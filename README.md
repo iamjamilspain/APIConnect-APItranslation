@@ -7,14 +7,14 @@ First draft of a script to translate v5c APIs to newAPIGateways.
 
 *BETA - UNTESTED - UNSUPPORTED - ASSUME IT WONT WORK*
 
-##install
+## install
 
 * Check out repo
 * Run `mkdir out`
 * Run `npm install`
 * Look at the code and change the reference to the file to be translated
 
-##TODO
+## TODO
 1. Implement Switch conversion
 2. Implement xslt conversion
 3. Implement detailed gw conversion
