@@ -10,6 +10,7 @@ First draft of a script to translate v5c APIs to newAPIGateways.
 ##install
 
 * Check out repo
+* Run `mkdir out`
 * Run `npm install`
 * Look at the code and change the reference to the file to be translated
 
