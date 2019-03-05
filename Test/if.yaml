@@ -1,0 +1,51 @@
+swagger: '2.0'
+info:
+  title: TestCase-if
+  x-ibm-name: testcase-if
+  version: 1.0.0
+schemes:
+  - https
+basePath: /testcase-if
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  phase: realized
+  testable: true
+  enforced: true
+  properties:
+    target-url:
+      value: 'https://httpbin.org/ip'
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: false
+  application-authentication:
+    certificate: false
+  assembly:
+    execute:
+      - if:
+          version: 1.0.0
+          title: if
+          condition: apim.getvariable('message.body').var == 'set'
+          execute:
+            - invoke:
+                version: 1.0.0
+                title: invoke
+                timeout: 60
+                verb: GET
+                cache-response: protocol
+                cache-ttl: 900
+                stop-on-error: []
+            - redact:
+                version: 1.0.0
+                title: redact
+                actions:
+                  - action: redact
+                    from:
+                      - all
+  gateway: datapower-gateway
+  type: rest
+paths: {}

@@ -1,0 +1,83 @@
+swagger: '2.0'
+info:
+  title: TestCase-operationswitch
+  x-ibm-name: testcase-operationswitch
+  version: 1.0.0
+schemes:
+  - https
+basePath: /testcase-operationswitch
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  phase: realized
+  testable: true
+  enforced: true
+  properties:
+    target-url:
+      value: 'https://httpbin.org/ip'
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: false
+  application-authentication:
+    certificate: false
+  assembly:
+    execute:
+      - operation-switch:
+          version: 1.0.0
+          title: operation-switch
+          case:
+            - operations:
+                - verb: get
+                  path: /op2
+                - verb: delete
+                  path: /op2
+                - verb: put
+                  path: /op2
+              execute:
+                - proxy:
+                    version: 1.0.0
+                    title: proxy
+                    timeout: 60
+                    verb: keep
+                    cache-response: protocol
+                    cache-ttl: 900
+                - redact:
+                    version: 1.0.0
+                    title: redact
+                    actions:
+                      - action: redact
+                        from:
+                          - all
+            - operations:
+                - verb: delete
+                  path: /op1
+              execute:
+                - redact:
+                    version: 1.0.0
+                    title: redact
+                    actions:
+                      - action: redact
+                        from:
+                          - all
+          otherwise: []
+  gateway: datapower-gateway
+  type: rest
+paths:
+  /op2:
+    parameters: []
+    get:
+      responses:
+        '123':
+          description: '123'
+          schema:
+            type: integer
+      consumes: []
+      produces: []
+      parameters: []
+  /op1:
+    parameters: []
+    delete: {}

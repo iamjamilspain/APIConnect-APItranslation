@@ -1,0 +1,34 @@
+swagger: '2.0'
+info:
+  title: TestCase-xml-to-json
+  x-ibm-name: testcase-xml-to-json
+  version: 1.0.0
+schemes:
+  - https
+basePath: /testcase-xml-to-json
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  phase: realized
+  testable: true
+  enforced: true
+  properties:
+    target-url:
+      value: 'https://httpbin.org/ip'
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: false
+  application-authentication:
+    certificate: false
+  assembly:
+    execute:
+      - xml-to-json:
+          version: 1.0.0
+          title: xml-to-json
+  gateway: datapower-gateway
+  type: rest
+paths: {}

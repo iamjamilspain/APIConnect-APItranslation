@@ -1,0 +1,40 @@
+swagger: '2.0'
+info:
+  title: TestCase-redaction
+  x-ibm-name: testcase-redaction
+  version: 1.0.0
+schemes:
+  - https
+basePath: /testcase-redaction
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  phase: realized
+  testable: true
+  enforced: true
+  properties:
+    target-url:
+      value: 'https://httpbin.org/ip'
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: false
+  application-authentication:
+    certificate: false
+  assembly:
+    execute:
+      - redact:
+          version: 1.0.0
+          title: redact
+          actions:
+            - action: redact
+              from:
+                - all
+              path: //path
+          description: redaction
+  gateway: datapower-gateway
+  type: rest
+paths: {}

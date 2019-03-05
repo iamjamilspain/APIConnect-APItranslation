@@ -1,0 +1,78 @@
+swagger: '2.0'
+info:
+  title: TestCase-everythingelse
+  x-ibm-name: testcase-everythingelse
+  version: 1.0.0
+schemes:
+  - https
+basePath: /testcase-everythingelse
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  phase: realized
+  testable: true
+  enforced: true
+  properties:
+    target-url:
+      value: 'https://httpbin.org/ip'
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: false
+  application-authentication:
+    certificate: false
+  assembly:
+    execute:
+      - activity-log:
+
+          title: activity-log
+          content: activity
+          error-content: payload
+      - gatewayscript:
+
+          title: gatewayscript
+      - invoke:
+
+          title: invoke
+          timeout: 60
+          verb: GET
+          cache-response: protocol
+          cache-ttl: 900
+          stop-on-error: []
+      - proxy:
+
+          title: proxy
+          timeout: 60
+          verb: keep
+          cache-response: protocol
+          cache-ttl: 900
+      - set-variable:
+
+          title: set-variable
+          actions: []
+      - validate:
+
+          title: validate
+      - jwt-generate:
+
+          title: jwt-generate
+          jwt: generated.jwt
+          iss-claim: iss.claim
+          exp-claim: 3600
+      - ltpa-generate:
+
+          title: ltpa-generate
+          tokenVersion: WebSphereVersion2
+          tokenExpiry: 600
+          tokenOutput: in-cookie-header
+      - jwt-validate:
+
+          title: jwt-validate
+          jwt: request.headers.authorization
+          output-claims: decoded.claims
+  gateway: datapower-gateway
+  type: rest
+paths: {}

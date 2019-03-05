@@ -1,0 +1,36 @@
+swagger: '2.0'
+info:
+  title: TestCase-Invoke
+  x-ibm-name: testcase-invoke
+  version: 1.0.0
+schemes:
+  - https
+basePath: /testcase-invoke
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  phase: realized
+  testable: true
+  enforced: true
+  properties:
+    target-url:
+      value: 'https://httpbin.org/ip'
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: false
+  application-authentication:
+    certificate: false
+  assembly:
+    execute:
+      - invoke:
+          title: invoke
+          version: 1.0.0
+          verb: keep
+          target-url: $(target-url)
+  gateway: datapower-gateway
+  type: rest
+paths: {}

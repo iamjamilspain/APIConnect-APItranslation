@@ -1,0 +1,37 @@
+swagger: '2.0'
+info:
+  title: TestCase-jsontoxml
+  x-ibm-name: testcase-jsontoxml
+  version: 1.0.0
+schemes:
+  - https
+basePath: /testcase-jsontoxml
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+x-ibm-configuration:
+  phase: realized
+  testable: true
+  enforced: true
+  properties:
+    target-url:
+      value: 'https://httpbin.org/ip'
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: false
+  application-authentication:
+    certificate: false
+  assembly:
+    execute:
+      - json-to-xml:
+          version: 1.0.0
+          title: json-to-xml
+          root-element-name: json
+          always-output-root-element: false
+          unnamed-element-name: element
+  gateway: datapower-gateway
+  type: rest
+paths: {}
